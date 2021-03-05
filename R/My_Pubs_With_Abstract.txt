@@ -22,7 +22,7 @@ ObjectiveTo determine the perceived met and unmet need for clinical neuropsychol
    volume = {46},
    number = {4},
    pages = {869-883},
-   abstract = {Cognitive compensatory interventions aim to alleviate psychosocial disability by targeting functioning directly using aids and strategies, thereby minimizing the impact of cognitive impairment. The aim was to conduct a systematic review and meta-analysis of cognitive compensatory interventions for psychosis by examining the effects on functioning and symptoms, and exploring whether intervention factors, study design, and age influenced effect sizes.Electronic databases (Ovid Medline, PsychINFO) were searched up to October 2018. Records obtained through electronic and manual searches were screened independently by two reviewers according to selection criteria. Data were extracted to calculate estimated effects (Hedge’s g) of treatment on functioning and symptoms at post-intervention and follow-up. Study quality was assessed using Cochrane Collaboration’s risk of bias tool.Twenty-six studies, from 25 independent randomized controlled trials (RCTs) were included in the meta-analysis (1654 participants, mean age = 38.9 years, 64% male). Meta-analysis revealed a medium effect of compensatory interventions on functioning compared to control conditions (Hedge’s g = 0.46, 95% CI = 0.33, 0.60, P &lt; .001), with evidence of relative durability at follow-up (Hedge’s g = 0.36, 95% CI = 0.19, 0.54, P &lt; .001). Analysis also revealed small significant effects of cognitive compensatory treatment on negative, positive, and general psychiatric symptoms, but not depressive symptoms. Estimated effects did not significantly vary according to treatment factors (ie, compensatory approach, dosage), delivery method (ie, individual/group), age, or risk of bias. Longer treatment length was associated with larger effect sizes for functioning outcomes. No evidence of publication bias was identified.Cognitive compensatory interventions are associated with robust, durable improvements in functioning in people with psychotic illnesses.},
+   abstract = {Cognitive compensatory interventions aim to alleviate psychosocial disability by targeting functioning directly using aids and strategies, thereby minimizing the impact of cognitive impairment. The aim was to conduct a systematic review and meta-analysis of cognitive compensatory interventions for psychosis by examining the effects on functioning and symptoms, and exploring whether intervention factors, study design, and age influenced effect sizes.Electronic databases (Ovid Medline, PsychINFO) were searched up to October 2018. Records obtained through electronic and manual searches were screened independently by two reviewers according to selection criteria. Data were extracted to calculate estimated effects (Hedge’s g) of treatment on functioning and symptoms at post-intervention and follow-up. Study quality was assessed using Cochrane Collaboration’s risk of bias tool.Twenty-six studies, from 25 independent randomized controlled trials (RCTs) were included in the meta-analysis (1654 particiants, mean age = 38.9 years, 64% male). Meta-analysis revealed a medium effect of compensatory interventions on functioning compared to control conditions (Hedge’s g = 0.46, 95% CI = 0.33, 0.60, P &lt; .001), with evidence of relative durability at follow-up (Hedge’s g = 0.36, 95% CI = 0.19, 0.54, P &lt; .001). Analysis also revealed small significant effects of cognitive compensatory treatment on negative, positive, and general psychiatric symptoms, but not depressive symptoms. Estimated effects did not significantly vary according to treatment factors (ie, compensatory approach, dosage), delivery method (ie, individual/group), age, or risk of bias. Longer treatment length was associated with larger effect sizes for functioning outcomes. No evidence of publication bias was identified.Cognitive compensatory interventions are associated with robust, durable improvements in functioning in people with psychotic illnesses.},
    ISSN = {0586-7614},
    DOI = {10.1093/schbul/sbz134},
    url = {https://doi.org/10.1093/schbul/sbz134},
@@ -89,11 +89,7 @@ Journal Article
 United States
 Appl Neuropsychol Child. 2019 Jul 14:1-10. doi: 10.1080/21622965.2019.1624170.},
    abstract = {Recent studies have shown that neuropsychological assessment is a scarce resource in youth mental health settings. The need for neuropsychological assessment might differ in metropolitan and nonmetropolitan areas due to characteristics inherent to these different regions. However, no formal studies have investigated this question. The aim of this research was to investigate whether need for neuropsychological assessment in youth mental health settings varies by geographic location. A cross-sectional online survey was completed by clinicians (N = 532) treating or assessing adolescents and young adults attending Australian primary care mental health (headspace) centers. Results indicated a similar need for neuropsychological assessment across the geographic areas. However, neuropsychological assessment was significantly less available to clients in outer regional, remote and very remote areas compared to major cities. Exploratory analyses further revealed that there were significantly fewer clinicians with a postgraduate degree and more clinicians with a bachelor degree in outer regional, remote and very remote areas than in major cities. Given the negative impact of cognitive impairments in youth with a mental illness, these findings reveal a necessity to enhance the availability and access to neuropsychological assessment in rural settings. Several plausible avenues to achieving increased access include increasing the funding available for this resource; providing nonmetropolitan clinicians with sufficient neuropsychological consultation, including rural training and rotations in neuropsychologists' postgraduate training; and exploring the use of tele-health in the provision of neuropsychological assessments in nonmetropolitan settings.},
-   keywords = {Neuropsychological assessment
-headspace
-need
-nonmetropolitan
-youth mental health},
+   keywords = {Neuropsychological assessment, headspace, need, nonmetropolitan, youth mental health},
    ISSN = {2162-2965},
    DOI = {10.1080/21622965.2019.1624170},
    year = {2019},
@@ -143,10 +139,7 @@ Journal Article
 Germany
 Soc Psychiatry Psychiatr Epidemiol. 2021 Jan 16. doi: 10.1007/s00127-020-02020-6.},
    abstract = {PURPOSE: Headspace services provide treatment options to young people seeking mental healthcare. To obtain a better understanding of needs and characteristics of this population, and effectively evaluate services, we require novel youth-specific outcome measures. As part of our broad research program to establish such measures, a sample of young people were recruited and assessed. The study describes (i) methodology used to obtain clinical, functioning, and substance use characteristics of young people presenting to headspace services; and (ii) an overview of these characteristics. METHODS: Young people presenting to headspace centres were recruited. Multidimensional information was obtained relating to clinical and functional outcomes, demographic information, and lifestyle factors. RESULTS: 1107 young help-seeking individuals were recruited. Participants were most likely young adults aged M = 18.1 years, SD = 3.3, with diagnoses of depression and/or anxiety (76.6%, n = 801), engaged in work and study (84.9%, n = 890), and living with parent(s) (68.9%, n = 736). Impairments in functioning were moderate as indicated by the Social and Occupational Functioning Assessment Scale (M = 65.2, SD = 9.5), substance use was common (alcohol 62.7%, n = 665; illicit substances 30.5%, n = 324), and current suicidal ideation was reported by a third (33.6%, n = 358). CONCLUSIONS: A broad dataset was obtained providing an insight into key clinical, functional and quality of life characteristics of these individuals. We observed that young people present with complex problems, comorbid diagnoses, moderate levels of symptomatology, impairments in functioning, substance use, and suicidal ideation. This work provides the foundation for our broader research program aiming to develop novel, relevant and youth-specific, change and outcome measures.},
-   keywords = {Cohort study
-Outcome measurement
-Primary mental healthcare
-Youth},
+   keywords = {Cohort study, Outcome measurement, Primary mental healthcare, Youth},
    ISSN = {0933-7954},
    DOI = {10.1007/s00127-020-02020-6},
    year = {2021},
@@ -171,12 +164,7 @@ PURPOSE: Headspace services provide treatment options to young people seeking me
    volume = {752},
    pages = {141856},
    abstract = {The exact transmission route of many respiratory infectious diseases remains a subject for debate to date. The relative contribution ratio of each transmission route is largely undetermined, which is affected by environmental conditions, human behaviour, the host and the microorganism. In this study, a detailed mathematical model is developed to investigate the relative contributions of different transmission routes to a multi-route transmitted respiratory infection. The following transmission routes are considered: long-range airborne transmission, short-range airborne transmission, direction inhalation of medium droplets or droplet nuclei, direct deposition of droplets of all sizes, direct and indirect contact route. It is illustrated that all transmission routes can dominate the total transmission risk under different scenarios. Influential parameters considered include the dose-response rate of different routes, droplet governing size that determines pathogen content in droplets, exposure distance, and pathogen dose transported to the hand of infector. Our multi-route transmission model provided a comprehensive but straightforward method to evaluate the probability of respiratory diseases transmission via different routes. It also established a basis for predicting the impact of individual-level intervention methods such as increasing close-contact distance and wearing protective masks.},
-   keywords = {Bioaerosol
-Respiratory infection
-Multi-route transmission
-Short-range airborne route
-Long-range airborne route
-Building ventilation},
+   keywords = {Bioaerosol, Respiratory infection, Multi-route transmission, Short-range airborne route, Long-range airborne route, Building ventilation},
    ISSN = {0048-9697},
    DOI = {https://doi.org/10.1016/j.scitotenv.2020.141856},
    url = {https://www.sciencedirect.com/science/article/pii/S0048969720353857},
@@ -290,9 +278,7 @@ Comment
 England
 2015/12/27 06:00
 Aust N Z J Psychiatry. 2016 Jan;50(1):11-2. doi: 10.1177/0004867415624552.},
-   keywords = {Humans
-*Mental Health
-*Mental Health Services},
+   keywords = {Humans, *Mental Health, *Mental Health Services},
    ISSN = {1440-1614 (Electronic)
 0004-8674 (Linking)},
    DOI = {10.1177/0004867415624552},
@@ -332,10 +318,7 @@ Hamilton, Matthew P
 Editorial
 Australia
 Med J Aust. 2017 Jun 19;206(11):487-489. doi: 10.5694/mja17.00329.},
-   keywords = {Australia
-*Health Care Reform
-Humans
-Mental Health Services/*organization & administration},
+   keywords = {Australia, *Health Care Reform, Humans, Mental Health Services/*organization & administration},
    ISSN = {0025-729x},
    DOI = {10.5694/mja17.00329},
    year = {2017},
@@ -351,11 +334,7 @@ Mental Health Services/*organization & administration},
    number = {4},
    pages = {37-44},
    abstract = {Psoriasis is a common, life-long inflammatory skin condition associated with high levels of physical, psychological and social disability as well as co-morbidities including psoriatic arthritis, the metabolic syndrome, Crohn's disease and non-alcoholic fatty liver disease. Psoriasis is also associated with an increased risk of cardiovascular disease (CVD), however the relationship is not yet wholly understood and is confounded by common co-occurrence of unhealthy lifestyle behaviours such as smoking, drinking excess alcohol or being overweight or sedentary. CVD risk information is complex for clinicians to communicate and patients to understand, and supporting risk-reducing strategies in the form of lifestyle behaviour change is challenging, particularly when people are already living with a demanding long-term condition. Additionally, there are indications that patients are dissatisfied with psoriasis care and that treatment approaches may be inadequate. IMPACT is a five-year programme of applied research, funded by NIHR, which aims to improve health services for people with psoriasis. It comprises a multi-disciplinary team of academics, clinicians and patients and draws on a range of research approaches. Phase I of the programme involves four interlocking workstreams, each focused on key questions in psoriasis management. All findings from Phase I have informed the planning and development of a final workstream (Phase II), the Psoriasis and Wellbeing ('Pso Well'<sup>®</sup>) intervention, comprising a practitioner training package and new patient resources to support people living with psoriasis to self-manage in the best ways. This article summarises the key findings of IMPACT Phase I and describes the Phase II next steps.},
-   keywords = {LIFESTYLE BEHAVIOUR CHANGE
-PSORIASIS
-SELF-MANAGEMENT
-CO-MORBIDITIES
-CARDIOVASCULAR DISEASE RISK},
+   keywords = {LIFESTYLE BEHAVIOUR CHANGE, PSORIASIS ,SELF-MANAGEMENT, CO-MORBIDITIES, CARDIOVASCULAR DISEASE RISK},
    url = {https://www.ingentaconnect.com/content/bdng/dn/2015/00000014/00000004/art00005},
    year = {2015},
    type = {Journal Article}
@@ -403,10 +382,7 @@ Abstract Objective The objective of the Entourage project was to develop an inno
    volume = {20},
    pages = {100323},
    abstract = {Objective The primary objective was to determine the acceptability, feasibility and safety of a novel digital intervention (Entourage) for young people with prominent social anxiety symptoms, with a particular focus on the engagement of young men. The secondary aim was to explore whether the intervention was associated with clinically significant improvements to clinical and social variables known to co-occur with social anxiety. Method A multidisciplinary team comprising of mental health clinicians, researchers, young adult fiction writers, a comic artist and young people with a lived experience of social anxiety developed the Entourage platform in collaboration. Entourage combines evidence-based therapeutic techniques for social anxiety with an engaging, social-media-based interface that allows users to build social connections, while also receiving expert clinical moderation and support from peer workers. Acceptability, feasibility and safety outcomes of Entourage were tested in a 12-week pilot study with 89 young people (48.3% male; age M = 19.8 years, SD = 3.3 years). Eligible participants were recruited via liaison with four headspace early-intervention centres in north-western Melbourne. Results 56.8% of the sample reported social anxiety symptoms in the severe or very severe range at baseline. Results demonstrated the Entourage intervention was feasible, safe, and potentially acceptable, with 98.6% of participants reporting they would recommend Entourage to another young person experiencing social anxiety. Usage results were also comparable across male and non-male participants. Results showed that young people reliably and significantly improved on clinical and social variables. In particular, young males showed a clinically significant improvement on social anxiety symptoms (d = 0.79, p < .001), depression (d = 0.71, p < .001), belongingness (d = 0.58, p = .001), increased feelings of social connectedness (d = 0.46, p = .004) and decreased loneliness (d = 0.46, p = .006). Non-male participants also experienced a significant increase in social connectedness (d = 0.76, p < .001), alongside reduced social anxiety (d = 0.78, p < .001) and experiential avoidance (d = 0.81, p < .001). Conclusions Entourage is a highly engaging and potentially effective intervention that represents a novel combination of features designed both to reduce social anxiety symptoms and improve social connection among young people. Entourage demonstrated some acceptability, feasibility and safety, with encouraging benefits to clinical and social variables. Entourage also showed favorable results for the engagement and support of young men with social anxiety symptoms.},
-   keywords = {Social anxiety
-Young people
-Digital intervention
-Peer support},
+   keywords = {Social anxiety, Young people, Digital intervention, Peer support},
    ISSN = {2214-7829},
    DOI = {https://doi.org/10.1016/j.invent.2020.100323},
    url = {https://www.sciencedirect.com/science/article/pii/S2214782919301204},
@@ -446,11 +422,7 @@ Journal Article
 Australia
 Early Interv Psychiatry. 2021 Jan 10. doi: 10.1111/eip.13100.},
    abstract = {AIM: People diagnosed with mental disorders experience higher rates of unemployment than those without. Career adaptability, defined as the ability to respond flexibly and make informed career decisions in work and throughout career transitions, is becoming increasingly important as the nature of work changes rapidly. Early vocational intervention may ameliorate poor education and employment outcomes experienced by young people with mental ill-health and promote transferable skills and adaptability. Online-based career support allows for ongoing access throughout different career stages. The current study combines mental health-informed digital career and peer motivation, to create a Youth Online Training and Employment System (YOTES) that supports young people with mental ill-health obtain and remain in education or employment. METHODS: This study is an unblinded randomized controlled trial for young people with mental ill-health, aged 16-25, who are seeking vocational support. Participants will be randomized to receive either YOTES, a moderated, online intervention with vocational, social, and peer motivation, or a control intervention, the headspace Digital Work and Study Service. Both groups will have access to in-person career support if seeking employment. The primary outcome will be career adaptability compared between the YOTES and control groups at 6-months post baseline. Secondary outcomes include number of hours worked in the past 7 days, hope, career confidence, psychological distress and health economic outcomes at 6- and 12-months post baseline. CONCLUSION: Results will demonstrate whether an online career intervention moderated by career practitioners with peer motivation can result in improved career adaptability in young people with mental ill-health.},
-   keywords = {career development
-digital innovation
-peer support
-vocational support
-youth mental health},
+   keywords = {career development, digital innovation, peer support, vocational support, youth mental health},
    ISSN = {1751-7885},
    DOI = {10.1111/eip.13100},
    year = {2021},
