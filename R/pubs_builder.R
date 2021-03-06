@@ -5,3 +5,93 @@ bib_pubs_df <- bib2df::bib2df("R/My_Pubs_With_Abstract.txt")
 surname_matches_chr <- bib_pubs_df$AUTHOR %>% purrr::map_chr(~.x[stringr::str_detect(.x,"Hamilton")]) %>% unique()
 admin_matches_chr <- surname_matches_chr[1:length(surname_matches_chr)]
 # bib_pubs_df$DOI[1] %>% fulltext::ft_get() -> test_ls
+pubn_md_chr <- readLines("R/template/index.md")
+.x<-1
+idx_int <- .x
+cr_res_ls <- rcrossref::cr_cn(bib_pubs_df$DOI %>% na.omit() %>% as.vector(), 
+                              format = "citeproc-json") 
+cr_res_ls <- cr_res_ls %>% stats::setNames(bib_pubs_df$DOI %>% na.omit() %>% as.vector())
+
+
+purrr::map_chr(pubn_md_chr, ~ {
+  stringr::str_replace(.x,"ABSTRACT_PLACEHODER",bib_pubs_df[idx_int,]$ABSTRACT) %>%
+    stringr::str_replace("AUTHOR_PLACEHODER",paste0(" - ",bib_pubs_df[idx_int,]$AUTHOR[[1]], collapse = "\n")) %>%
+    stringr::str_replace_all("DATE_PLACEHOLDER",
+                         ifelse(is.na(bib_pubs_df$DOI[idx_int]),
+                                "", # Need alternative source for no-doi docs
+                                cr_res_ls %>%
+                                  purrr::pluck(bib_pubs_df$DOI[idx_int]) %>%
+                           purrr::pluck("created") %>%
+                           purrr::pluck(2))) %>%
+    stringr::str_replace("DOI_PLACEHOLDER",
+                         ifelse(is.na(bib_pubs_df$DOI[idx_int]),
+                                "#doi: ",
+                                paste0("doi: ",bib_pubs_df$DOI[idx_int]))) %>%
+    stringr::str_replace("NAME_URL_PLACEHOLDER",
+                             ifelse(T, # MODIFY
+                                    paste0("# links:\n# - name: \"\"\n#   url: \"\""),
+                                    paste0("links:\n - name: \"NAME_GOES_HERE\"\n   url: \"URL_GOES_HERE\"") # MODIFY
+                                    )) %>%
+    stringr::str_replace("URL_PDF_PLACEHOLDER",
+                         ifelse(T, # MODIFY
+                                paste0("# url_pdf: ''"),
+                                paste0("url_pdf: URL_GOES_HERE") # MODIFY
+                         )) %>%
+    stringr::str_replace("URL_CODE_PLACEHOLDER",
+                         ifelse(T, # MODIFY
+                                paste0("# url_dataset: ''"),
+                                paste0("url_dataset: 'URL_GOES_HERE'") # MODIFY
+                         )) %>%
+    stringr::str_replace("URL_DATASET_PLACEHOLDER",
+                         ifelse(T, # MODIFY
+                                paste0("# url_dataset: ''"),
+                                paste0("url_dataset: 'URL_GOES_HERE'") # MODIFY
+                         )) %>%
+    stringr::str_replace("URL_POSTER_PLACEHOLDER",
+                         ifelse(T, # MODIFY
+                                paste0("# url_poster: ''"),
+                                paste0("url_poster: 'URL_GOES_HERE'") # MODIFY
+                         )) %>%
+    stringr::str_replace("URL_PROJECT_PLACEHOLDER",
+                         ifelse(T, # MODIFY
+                                paste0("# url_project: ''"),
+                                paste0("url_project: 'URL_GOES_HERE'") # MODIFY
+                         )) %>%
+    stringr::str_replace("URL_SLIDES_PLACEHOLDER",
+                         ifelse(T, # MODIFY
+                                paste0("# url_slides: ''"),
+                                paste0("url_slides: 'URL_GOES_HERE'") # MODIFY
+                         )) %>%
+    stringr::str_replace("URL_SOURCE_PLACEHOLDER",
+                         ifelse(T, # MODIFY
+                                paste0("# url_source: ''"),
+                                paste0("url_source: 'URL_GOES_HERE'") # MODIFY
+                         )) %>%
+    stringr::str_replace("URL_VIDEO_PLACEHOLDER",
+                         ifelse(T, # MODIFY
+                                paste0("# url_video: '' "),
+                                paste0("url_video: 'URL_GOES_HERE'") # MODIFY
+                         )) %>%
+    stringr::str_replace("JOURNAL_LONG_PLACEHOLDER",
+                         bib_pubs_df$JOURNAL[idx_int]) %>%
+    stringr::str_replace("JOURNAL_SHORT_PLACEHOLDER",
+                         bib_pubs_df$JOURNAL[idx_int])  %>% #MODIFY
+    stringr::str_replace("PUB_TYPE_PLACEHOLDER",
+                         ifelse(bib_pubs_df$CATEGORY[idx_int] == "ARTICLE",
+                                ifelse(bib_pubs_df$JOURNAL[idx_int] %in% c("aRXiv",
+                                                                    "bioRxiv",
+                                                                    "medRxiv"),
+                                       "3",
+                                       "2"),
+                         "4")) %>%
+    stringr::str_replace("SUMMARY_PLACEHOLDER",
+                         corpus::text_split(bib_pubs_df$ABSTRACT[idx_int]) %>%
+                           dplyr::mutate(text = as.character(text)) %>%
+                           dplyr::slice(1:2) %>%
+                           dplyr::pull("text") %>%
+                           as.vector() %>%
+                           paste0(collapse=" ") %>%
+                           trimws()  %>%
+                           paste0("..")
+                         )
+}) %>% writeLines()

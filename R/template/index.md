@@ -1,16 +1,15 @@
 ---
 abstract: "ABSTRACT_PLACEHODER"
 authors:
-" - AUTHOR_PLACEHODER"
+AUTHOR_PLACEHODER
 date: "DATE_PLACEHOLDER"
-doi: "DOI_PLACEHOLDER"
+DOI_PLACEHOLDER
 featured: true
 image:
   caption: "'CAPTION_PLACEHOLDER'"
   focal_point: ""
   preview_only: true
 projects: []
-links:
 NAME_URL_PLACEHOLDER
 URL_PDF_PLACEHOLDER
 URL_CODE_PLACEHOLDER
@@ -25,7 +24,7 @@ publication_short: "JOURNAL_SHORT_PLACEHOLDER"
 publication_types:
 - "PUB_TYPE_PLACEHOLDER"
 publishDate: "DATE_PLACEHOLDER"
-summary: "FIRST SENTENCE ..."
+summary: "SUMMARY_PLACEHOLDER"
 tags:
 " - KEYWORDS_PLACEHOLDER "
 title: "TITLE_PLACEHOLDER"
