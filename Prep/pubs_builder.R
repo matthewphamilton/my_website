@@ -1,7 +1,50 @@
 scholar_pubs_tb <- scholar::get_publications("t1ZHrCoAAAAJ") %>%
   tibble::as_tibble() # Update with ready4show ref once migration complete
 # Note : need to write script that compacts keywords and place call here
-bib_pubs_df <- bib2df::bib2df("R/My_Pubs_With_Abstract.txt") 
+bib_pubs_df <- bib2df::bib2df("PREP/My_PR_PUBS.bib") 
+abstract_ls <- bib_pubs_df$ABSTRACT %>% purrr::map(~corpus::text_split(.x) %>%
+  dplyr::mutate(text = as.character(text)) %>%
+  dplyr::pull("text")) 
+expand_term_fn <- function(term_1L_chr){
+  terms_chr <- c(c(term_1L_chr,c(term_1L_chr) %>% 
+        toupper(),c(term_1L_chr,
+                    c(term_1L_chr) %>% toupper()) %>% paste0(":")))
+  return(terms_chr)
+}
+transform_abstract_ls <- function(abstract_ls){
+  tfmd_abstract_ls <- abstract_ls %>%
+    purrr::map(~{
+      abstract_chr <- .x 
+      abstract_chr[1] <- ifelse(stringr::word(abstract_chr[1]) %in% (purrr::map(c("Abstract", "Summary"), 
+                                                                                ~ expand_term_fn(.x)) %>% 
+                                                                       purrr::flatten_chr()),
+                                stringr::str_remove(abstract_chr[1],
+                                                    stringr::word(abstract_chr[1])) %>%
+                                  trimws(which = "left"),
+                                abstract_chr[1])
+      purrr::map2_chr(abstract_chr,
+                      abstract_chr %>% 
+                        purrr::map_lgl(~
+                                         (stringr::str_detect(.x, 
+                                                            "^\\b[A-Z]\\w+:?\\s+\\b[A-Z]")[[1]] |
+                                            stringr::word(.x) == .x)
+                                       
+                                       ),
+                      ~ ifelse(.y,
+                               stringr::str_replace(.x,stringr::word(.x),paste0("**",stringr::word(.x),"**")),
+                               .x)
+      )
+    }) %>%
+    purrr::map_chr(~{
+      collapsed_1L_chr <- paste0(.x, collapse = "") 
+      ifelse(collapsed_1L_chr == "NA",
+             NA_character_,
+             collapsed_1L_chr)
+      })
+  
+  return(tfmd_abstract_ls)
+}
+updated_abstract_ls <- abstract_ls %>% transform_abstract_ls() 
 surname_matches_chr <- bib_pubs_df$AUTHOR %>% purrr::map_chr(~.x[stringr::str_detect(.x,"Hamilton")]) %>% unique()
 admin_matches_chr <- surname_matches_chr[1:length(surname_matches_chr)]
 # bib_pubs_df$DOI[1] %>% fulltext::ft_get() -> test_ls
