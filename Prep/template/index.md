@@ -26,6 +26,6 @@ publication_types:
 publishDate: "DATE_PLACEHOLDER"
 summary: "SUMMARY_PLACEHOLDER"
 tags:
-" - KEYWORDS_PLACEHOLDER "
+"KEYWORDS_PLACEHOLDER"
 title: "TITLE_PLACEHOLDER"
 ---
