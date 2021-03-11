@@ -276,7 +276,7 @@ make_pubs_entries_ls <- function(pubs_df,
                               JOURNAL_SHORT_PLACEHOLDER <- ..14
                               PUB_TYPE_PLACEHOLDER <- ..21
                               SUMMARY_PLACEHOLDER <- ..4
-                              KEYWORDS_PLACEHOLDER <- ..20
+                              KEYWORDS_PLACEHOLDER <- ..16
                               TITLE_PLACEHOLDER <- ..1
                                pub_entry_chr <- purrr::map_chr(tmpl_pub_md_chr, ~ {
                                 stringr::str_replace(.x,"ABSTRACT_PLACEHODER",ABSTRACT_PLACEHODER) %>% # TRANSFORMED_ABSTRACT
@@ -478,7 +478,7 @@ overwrite_1L_lgl <- F
 # if(!identical(integer(0),index_1L_int))
 #   pub_entry_chr[index_1L_int-1] <- "# tags:"
 #pub_entry_chr[4] <- pub_entry_chr[4] %>% stringr::str_replace_all("â€ "," ")
-1:2 %>% purrr::walk(~{
+1:length(pubs_entries_ls) %>% purrr::walk(~{
   pub_nm_dir_1L_chr <- names(pubs_entries_ls)[.x]
   pub_entry_chr <- pubs_entries_ls[[.x]]
   new_entry_dir_1L_chr <- paste0(pub_entries_dir_1L_chr,"/",pub_nm_dir_1L_chr)

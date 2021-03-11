@@ -38,6 +38,12 @@ publication_types:
 publishDate: "2019-12-12T20:10:17Z"
 summary: "Cognitive compensatory interventions aim to alleviate psychosocial disability by targeting functioning directly using aids and strategies, thereby minimizing the impact of cognitive impairment.  The aim was to conduct a systematic review and meta-analysis of cognitive compensatory interventions for psychosis by examining the effects on functioning and symptoms, and exploring whether intervention factors, study design, and age influenced effect sizes.Electronic databases (Ovid Medline, PsychINFO) were searched up to October 2018..."
 tags:
-Journal Article
+ - INTERNAL SELF-MANAGEMENT
+ - EXTERNAL STRATEGIES
+ - ENVIRONMENTAL MODIFICATION
+ - ERRORLESS LEARNING
+ - SCHIZOPHRENIA
+ - SEVERE MENTAL ILLNESS
+ - FUNCTIONAL OUTCOME
 title: "Compensatory Interventions for Cognitive Impairments in Psychosis: A Systematic Review and Meta-Analysis"
 ---
