@@ -30,7 +30,7 @@ projects: []
 publication: '*medRxiv*'
 publication_short: "medRxiv"
 publication_types:
-NA
+- "3"
 publishDate: "2020-04-11T19:05:14Z"
 summary: "The exact transmission route of many respiratory infectious diseases remains a subject for debate to date.  The relative contribution ratio of each transmission route is largely undetermined, which is affected by environmental conditions, human behavior, the host and the microorganism..."
 tags:

@@ -16,7 +16,7 @@ authors:
  - Simmone Howell
  - Christopher Miles
  - Marc Pearson
- - Mario Álvarez-Jiménez
+ - Mario Alvarez-Jiminez
 date: "2020-05-05T19:57:18Z"
 doi: https://doi.org/10.1111/cp.12222
 featured: true

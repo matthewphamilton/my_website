@@ -213,11 +213,13 @@ add_pub_types_to_pubs_df <- function(pubs_df,
   pubs_df <- pubs_df %>%
     dplyr::mutate(pub_type_tags_chr = purrr::map2_chr(.$TYPE,
                                                       .$jrnl_long_nm_tags_chr, 
-                                                      ~ ifelse(.x == "Journal Article",
+                                                      ~ ifelse(is.na(.x),
+                                                               "3",
+                                                               ifelse(.x == "Journal Article",
                                                                ifelse(.y %in% preprint_srvrs_chr,
                                                                       "3",
                                                                       "2"),
-                                                               "4")))
+                                                               "4"))))
   return(pubs_df)
 }
 make_pubs_df <- function(path_to_bib_1L_chr,
@@ -419,7 +421,21 @@ transform_abstract_ls <- function(abstract_ls){
     })
   return(abstracts_chr)
 }
-
+write_pub_entries <- function(pubs_entries_ls,
+                              pub_entries_dir_1L_chr,
+                              pub_nm_dir_1L_chr){
+  1:length(pubs_entries_ls) %>% purrr::walk(~{
+    pub_nm_dir_1L_chr <- names(pubs_entries_ls)[.x]
+    pub_entry_chr <- pubs_entries_ls[[.x]]
+    new_entry_dir_1L_chr <- paste0(pub_entries_dir_1L_chr,"/",pub_nm_dir_1L_chr)
+    new_entry_file_1L_chr <- paste0(new_entry_dir_1L_chr,"/index.md")
+    if(!dir.exists(new_entry_dir_1L_chr))
+      dir.create(new_entry_dir_1L_chr)
+    if(!file.exists(new_entry_file_1L_chr) | overwrite_1L_lgl)
+      pub_entry_chr %>% writeLines(new_entry_file_1L_chr) 
+  }
+  )
+}
 ## Application
 # scholar_pubs_tb <- scholar::get_publications("t1ZHrCoAAAAJ") %>%
 #   tibble::as_tibble() # Update with ready4show ref once migration complete
@@ -478,16 +494,7 @@ overwrite_1L_lgl <- F
 # if(!identical(integer(0),index_1L_int))
 #   pub_entry_chr[index_1L_int-1] <- "# tags:"
 #pub_entry_chr[4] <- pub_entry_chr[4] %>% stringr::str_replace_all("â€ "," ")
-1:length(pubs_entries_ls) %>% purrr::walk(~{
-  pub_nm_dir_1L_chr <- names(pubs_entries_ls)[.x]
-  pub_entry_chr <- pubs_entries_ls[[.x]]
-  new_entry_dir_1L_chr <- paste0(pub_entries_dir_1L_chr,"/",pub_nm_dir_1L_chr)
-  new_entry_file_1L_chr <- paste0(new_entry_dir_1L_chr,"/index.md")
-  if(!dir.exists(new_entry_dir_1L_chr))
-    dir.create(new_entry_dir_1L_chr)
-  if(!file.exists(new_entry_file_1L_chr) | overwrite_1L_lgl)
-    pub_entry_chr %>% writeLines(new_entry_file_1L_chr) 
-}
-                      )
 
 
+
+# Manual edits to Eoin, Mario and pub type for preprint.

@@ -5,7 +5,7 @@ authors:
  - Kelly Allott
  - Amanda Proposch
  - Matthew Hamilton
- - E?in Killackey
+ - Eoin Killackey
 date: "2020-02-14T07:56:02Z"
 doi: https://doi.org/10.1111/eip.12949
 featured: true

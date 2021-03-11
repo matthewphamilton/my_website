@@ -10,7 +10,7 @@ authors:
  - Daniela Cagliarini
  - Matthew Hamilton
  - John Gleeson
- - Eóin Killackey
+ - Eoin Killackey
  - Mario Alvarez-Jimenez
 date: "2021-01-15T03:50:15Z"
 doi: 10.1111/eip.13100
