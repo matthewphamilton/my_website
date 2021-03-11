@@ -39,9 +39,35 @@ add_auth_tags_to_pubs_df <- function(pubs_df,
                     })) 
   return(pubs_df)
 }
+add_jrnl_tags_to_pubs_df <-  function(pubs_df){
+  pubs_df <- pubs_df %>%
+    dplyr::mutate(jrnl_long_nm_tags_chr = purrr::map2_chr(.$DOI, 
+                                                          .$JOURNAL,
+                                                          ~ ifelse(is.na(.x),
+                                                                   .y, 
+                                                                   {jrnl_long_1L_chr <- cref_res_ls %>%
+                                                                     purrr::pluck(.x) %>%
+                                                                     purrr::pluck("container-title")
+                                                                   if(is.null(jrnl_long_1L_chr))
+                                                                     jrnl_long_1L_chr <- .y
+                                                                   jrnl_long_1L_chr
+                                                                   }))) %>%
+    dplyr::mutate(jrnl_short_nm_tags_chr = purrr::map2_chr(.$DOI, 
+                                                           .$jrnl_long_nm_tags_chr, 
+                                                           ~ ifelse(is.na(.x),
+                                                                    .y, 
+                                                                    {jrnl_short_1L_chr <- cref_res_ls %>%
+                                                                      purrr::pluck(.x) %>%
+                                                                      purrr::pluck("container-title-short")
+                                                                    if(is.null(jrnl_short_1L_chr))
+                                                                      jrnl_short_1L_chr <- .y
+                                                                    jrnl_short_1L_chr
+                                                                    })))
+  return(pubs_df)
+}
 add_keywd_tags_to_pubs_df <- function(pubs_df){
   pubs_df <- pubs_df %>%
-    dplyr::mutate(keywd_tags_chr = KEYWORDS  %>% 
+    dplyr::mutate(keywd_tags_chr = KEYWORDS %>% 
                     purrr::map_chr(~{
                       ifelse(is.na(.x),
                              "# No Keywords",
@@ -54,6 +80,19 @@ add_keywd_tags_to_pubs_df <- function(pubs_df){
                                ))
                     })
                   ) 
+  return(pubs_df)
+}
+add_summary_tags_to_pubs_df <- function(pubs_df){
+  pubs_df <- pubs_df %>%
+    dplyr::mutate(abstract_tags_chr = ABSTRACT %>% transform_abstract_ls()) %>%
+    dplyr::mutate(summary_tags_chr = abstract_tags_chr %>% purrr::map_chr(~corpus::text_split(.x) %>%
+                                                                            dplyr::mutate(text = as.character(text)) %>%
+                                                                            dplyr::slice(1:2) %>%
+                                                                            dplyr::pull("text") %>%
+                                                                            as.vector() %>%
+                                                                            paste0(collapse=" ") %>%
+                                                                            trimws()  %>%
+                                                                            paste0(".."))) 
   return(pubs_df)
 }
 add_url_tag_vars_to_pubs_df <- function(pubs_df){ # Purely placeholder for the moment. Needs updating
@@ -129,75 +168,85 @@ get_auth_surnm_mtchs <- function(authorship_ls,
     unique()
   return(surname_matches_chr)
 }
+get_refs_of_missing_var <- function(pubs_df,
+                                    var_nm_1L_chr){
+  mssng_pub_refs_chr <- pubs_df %>% 
+    dplyr::filter(is.na(!!rlang::sym(var_nm_1L_chr))) %>% 
+    dplyr::pull(unique_pub_ref_nms_chr)
+  return(mssng_pub_refs_chr)
+}
 make_cref_res_ls <- function(doi_chr){ # Add argument for cref polite option
   cref_res_ls <- rcrossref::cr_cn(doi_chr %>% na.omit() %>% as.vector(), 
                                   format = "citeproc-json")  %>% 
     stats::setNames(doi_chr %>% na.omit() %>% as.vector())
   return(cref_res_ls)
 }
-make_pubs_df <- function(path_to_bib_1L_chr,#spine_of_pubs_df,
-                         auth_nm_matches_chr,
-                         auth_nm_tag_1L_chr = "admin",
-                         preprint_srvrs_chr = c("aRXiv","bioRxiv","medRxiv")){
-  spine_of_pubs_df <- bib_pubs_df <- bib2df::bib2df(path_to_bib_1L_chr) 
-  cref_res_ls <- make_cref_res_ls(spine_of_pubs_df$DOI)
-  pubs_df <- spine_of_pubs_df %>%
-    add_auth_tags_to_pubs_df(cref_res_ls = cref_res_ls,
-                             auth_nm_matches_chr = auth_nm_matches_chr,
-                             auth_nm_tag_1L_chr = auth_nm_tag_1L_chr) %>%
-    dplyr::mutate(abstract_tags_chr = ABSTRACT %>% transform_abstract_ls()) %>%
-    add_url_tag_vars_to_pubs_df() %>%
-    add_keywd_tags_to_pubs_df()%>%
+make_mssng_vals_ls <- function(pubs_df){
+  mssng_vals_ls <- purrr::map(names(pubs_df)[c(1:2,6:8,13:14,18,23:33)],
+                              ~  get_refs_of_missing_var(pubs_df,
+                                                         var_nm_1L_chr = .x)) %>%
+    stats::setNames(names(pubs_df)[c(1:2,6:8,13:14,18,23:33)]) %>%
+    purrr::discard(identical,y= character(0))
+  return(mssng_vals_ls)
+}
+add_publn_date_tags_to_pubs_df <- function(pubs_df,
+                                           cref_res_ls){
+  pubs_df <- pubs_df %>%
     dplyr::mutate(publn_date_tags_chr = DOI %>% 
                     purrr::map_chr(~ ifelse(is.na(.x),
-                                            NA_character_, # Need alternative source for no-doi docs
+                                            NA_character_, 
                                             cref_res_ls %>%
                                               purrr::pluck(.x) %>%
                                               purrr::pluck("created") %>%
-                                              purrr::pluck(2)))) %>%
+                                              purrr::pluck(2))))
+  return(pubs_df)
+}
+add_doi_tags_to_pubs_df <- function(pubs_df){
+  pubs_df <- pubs_df %>%
     dplyr::mutate(doi_tags_chr = DOI %>% purrr::map_chr(~ ifelse(is.na(.x),
                                                                  "#doi: ",
-                                                                 paste0("doi: ",.x)))) %>%
-    dplyr::mutate(jrnl_long_nm_tags_chr = purrr::map2_chr(.$DOI, 
-                                                          .$JOURNAL,
-                                                          ~ ifelse(is.na(.x),
-                                                                   .y, 
-                                                                   {jrnl_long_1L_chr <- cref_res_ls %>%
-                                                                     purrr::pluck(.x) %>%
-                                                                     purrr::pluck("container-title")
-                                                                   if(is.null(jrnl_long_1L_chr))
-                                                                     jrnl_long_1L_chr <- .y
-                                                                   jrnl_long_1L_chr
-                                                                   }))) %>%
-    dplyr::mutate(jrnl_short_nm_tags_chr = purrr::map2_chr(.$DOI, 
-                                                           .$jrnl_long_nm_tags_chr, 
-                                                           ~ ifelse(is.na(.x),
-                                                                    .y, 
-                                                                    {jrnl_short_1L_chr <- cref_res_ls %>%
-                                                                      purrr::pluck(.x) %>%
-                                                                      purrr::pluck("container-title-short")
-                                                                    if(is.null(jrnl_short_1L_chr))
-                                                                      jrnl_short_1L_chr <- .y
-                                                                    jrnl_short_1L_chr
-                                                                    }))) %>%
+                                                                 paste0("doi: ",.x))))
+  return(pubs_df)
+}
+add_pub_types_to_pubs_df <- function(pubs_df,
+                                     preprint_srvrs_chr = c("aRXiv","bioRxiv","medRxiv")){
+  pubs_df <- pubs_df %>%
     dplyr::mutate(pub_type_tags_chr = purrr::map2_chr(.$TYPE,
                                                       .$jrnl_long_nm_tags_chr, 
                                                       ~ ifelse(.x == "Journal Article",
                                                                ifelse(.y %in% preprint_srvrs_chr,
                                                                       "3",
                                                                       "2"),
-                                                               "4"))) %>%
-    dplyr::mutate(summary_tags_chr = abstract_tags_chr %>% purrr::map_chr(~corpus::text_split(.x) %>%
-                                                                            dplyr::mutate(text = as.character(text)) %>%
-                                                                            dplyr::slice(1:2) %>%
-                                                                            dplyr::pull("text") %>%
-                                                                            as.vector() %>%
-                                                                            paste0(collapse=" ") %>%
-                                                                            trimws()  %>%
-                                                                            paste0(".."))) %>%
-    dplyr::select(CATEGORY, TYPE, TITLE, AUTHOR, JOURNAL, VOLUME, NUMBER, PAGES, YEAR, ISSN, DOI, URL, KEYWORDS, ABSTRACT, 
-                  abstract_tags_chr, auth_tags_chr, doi_tags_chr, jrnl_long_nm_tags_chr, jrnl_short_nm_tags_chr, keywd_tags_chr, pub_type_tags_chr, publn_date_tags_chr, summary_tags_chr,
-                  name_url_tags_chr, pdf_url_tags_chr, code_url_tags_chr, dataset_url_tags_chr, poster_url_tags_chr, project_url_tags_chr, slides_url_tags_chr, source_url_tags_chr, video_url_tags_chr)
+                                                               "4")))
+  return(pubs_df)
+}
+make_pubs_df <- function(path_to_bib_1L_chr,
+                         given_nm_1L_chr,
+                         middle_nms_chr = NA_character_,
+                         family_nm_1L_chr,
+                         auth_nm_tag_1L_chr = "admin",
+                         preprint_srvrs_chr = c("aRXiv","bioRxiv","medRxiv")){
+  auth_nm_matches_chr <- make_nm_combns(given_nm_1L_chr = given_nm_1L_chr,
+                                        middle_nms_chr = middle_nms_chr,
+                                        family_nm_1L_chr = family_nm_1L_chr)
+  spine_of_pubs_df <- bib_pubs_df <- bib2df::bib2df(path_to_bib_1L_chr) 
+  cref_res_ls <- make_cref_res_ls(spine_of_pubs_df$DOI)
+  pubs_df <- spine_of_pubs_df %>%
+    add_doi_tags_to_pubs_df() %>%
+    add_auth_tags_to_pubs_df(cref_res_ls = cref_res_ls,
+                             auth_nm_matches_chr = auth_nm_matches_chr,
+                             auth_nm_tag_1L_chr = auth_nm_tag_1L_chr) %>%
+    add_summary_tags_to_pubs_df() %>%
+    add_url_tag_vars_to_pubs_df() %>%
+    add_keywd_tags_to_pubs_df() %>%
+    add_publn_date_tags_to_pubs_df(cref_res_ls = cref_res_ls) %>%
+    add_jrnl_tags_to_pubs_df() %>%
+    add_pub_types_to_pubs_df(preprint_srvrs_chr = preprint_srvrs_chr) %>%
+    dplyr::select(TITLE,
+                  ABSTRACT, abstract_tags_chr, summary_tags_chr, AUTHOR, auth_tags_chr, DOI, doi_tags_chr, JOURNAL, VOLUME, NUMBER, PAGES, jrnl_long_nm_tags_chr, jrnl_short_nm_tags_chr, KEYWORDS, keywd_tags_chr, YEAR, publn_date_tags_chr, CATEGORY, TYPE, pub_type_tags_chr,
+                  ISSN,  URL, 
+                  name_url_tags_chr, pdf_url_tags_chr, code_url_tags_chr, dataset_url_tags_chr, poster_url_tags_chr, project_url_tags_chr, slides_url_tags_chr, source_url_tags_chr, video_url_tags_chr) %>%
+    dplyr::mutate(unique_pub_ref_nms_chr = make_unique_pub_ref_nms(.))
   return(pubs_df)
 }
 make_pubs_df_spine <- function(bib_pubs_df,
@@ -254,18 +303,18 @@ make_pubs_entries_ls <- function(pubs_df){
                                 pub_entry_chr
                               }) 
                             }) %>%
-    stats::setNames(make_unique_pub_dir_nms(pubs_df))
+    stats::setNames(pubs_df$unique_pub_ref_nms_chr)
   return(entries_ls)
 }
-make_unique_pub_dir_nms <- function(pubs_df){
+make_unique_pub_ref_nms <- function(pubs_df){
   unique_pub_dir_nms_chr <- pubs_df %>% 
-    purrr::pmap_chr(~paste0(stringr::word(..4[1]) %>% 
+    purrr::pmap_chr(~paste0(stringr::word(..5[1]) %>% 
                               stringr::str_replace(",",""),
-                            "_",stringr::word(..5),
+                            "_",stringr::word(..9),
                             "_",
-                            ..9,
+                            ..17,
                             "_",
-                            stringr::word(..3)))%>% 
+                            stringr::word(..1)))%>% 
     make.unique() %>% 
     stringr::str_replace_all("\\.","_")
   return(unique_pub_dir_nms_chr)
@@ -308,6 +357,7 @@ transform_abstract_ls <- function(abstract_ls){
     })
   return(abstracts_chr)
 }
+
 ## Application
 # scholar_pubs_tb <- scholar::get_publications("t1ZHrCoAAAAJ") %>%
 #   tibble::as_tibble() # Update with ready4show ref once migration complete
@@ -316,11 +366,86 @@ transform_abstract_ls <- function(abstract_ls){
 # bib_pubs_df <- bib2df::bib2df("PREP/My_PR_PUBS.bib") 
 # surname_matches_chr <- get_auth_surnm_mtchs(bib_pubs_df$AUTHOR,
 #                                             "Hamilton")
-pubs_df <- 
-  # make_pubs_df_spine(bib_pubs_df,
-  #                  auth_nm_matches_chr = surname_matches_chr[1:length(surname_matches_chr)]) %>%
-make_pubs_df(path_to_bib_1L_chr = "PREP/My_PR_PUBS.bib",
-             preprint_srvrs_chr = c("aRXiv", "bioRxiv","medRxiv"))
+pubs_df <- make_pubs_df(path_to_bib_1L_chr = "PREP/My_PR_PUBS.bib",
+                        given_nm_1L_chr = "Matthew",
+                        middle_nms_chr = "Phillip",
+                        family_nm_1L_chr = "Hamilton",
+                        preprint_srvrs_chr = c("aRXiv", "bioRxiv","medRxiv")) 
+pubs_df <- pubs_df %>% 
+  replace_mssng_vals_in_pubs_df(mssng_vals_ls = make_mssng_vals_ls(pubs_df),
+                                replacements_ls = list(#DOI = c(NA_character_),
+                                                       publn_date_tags_chr = "2015-12-10T00:00:00Z",
+                                                       ABSTRACT = c("A brief opinion piece concerning mental health reform in Australia.",
+                                                                    "A suggested policy framework for addressing mental health reform in Australia. Addresses the failure to resource and integrate mental health into the mainstream of the health care system.")
+                                                       #URL = NA_character_
+                                                       ))
+
+
+# idx_1L_int <- 1L
+# .x<- pubs_df
+# .y<- 1L
+replace_mssng_vals_in_pubs_df <- function(pubs_df,
+                                          mssng_vals_ls,
+                                          replacements_ls,
+                                          preprint_srvrs_chr = c("aRXiv","bioRxiv","medRxiv"),
+                                          given_nm_1L_chr = NA_character_,
+                                          middle_nms_chr = NA_character_,
+                                          family_nm_1L_chr = NA_character_,
+                                          auth_nm_tag_1L_chr = "admin"){
+  mssng_vals_ls <- mssng_vals_ls[names(replacements_ls)]
+  updated_pubs_df <- 1:length(mssng_vals_ls) %>% purrr::reduce(.init = pubs_df,
+                                            ~ {
+                                              replacement_lup <- tibble::tibble(ref_chr = mssng_vals_ls[[.y]],
+                                                                                val_chr = replacements_ls[[.y]])
+                                              .x %>% 
+                                                dplyr::mutate(!!rlang::sym(names(replacements_ls)[.y]) := dplyr::case_when(unique_pub_ref_nms_chr %in% mssng_vals_ls[[.y]] ~ unique_pub_ref_nms_chr %>%
+                                                                                                                             purrr::map_chr(~{
+                                                                                                                               ifelse(.x %in% replacement_lup$ref_chr,
+                                                                                                                                      ready4fun::get_from_lup_obj(replacement_lup,
+                                                                                                                                                                  target_var_nm_1L_chr = "val_chr",
+                                                                                                                                                                  match_var_nm_1L_chr = "ref_chr",
+                                                                                                                                                                  match_value_xx = .x,
+                                                                                                                                                                  evaluate_lgl = F),
+                                                                                                                                      NA_character_)}),
+                                                                                                                           T ~ !!rlang::sym(names(replacements_ls)[.y])))
+                                            })
+  if("DOI" %in% names(replacements_ls)){
+    cref_res_ls <- make_cref_res_ls(spine_of_pubs_df$DOI)
+    updated_pubs_df <- updated_pubs_df %>%
+      add_doi_tags_to_pubs_df() %>%
+      add_publn_date_tags_to_pubs_df(cref_res_ls = cref_res_ls)
+  }
+  if("DOI" %in% names(replacements_ls) | "AUTHOR" %in% names(replacements_ls)){
+    auth_nm_matches_chr <- make_nm_combns(given_nm_1L_chr = given_nm_1L_chr,
+                                          middle_nms_chr = middle_nms_chr,
+                                          family_nm_1L_chr = family_nm_1L_chr)
+    updated_pubs_df <- updated_pubs_df %>%
+      add_auth_tags_to_pubs_df(cref_res_ls = cref_res_ls,
+                             auth_nm_matches_chr = auth_nm_matches_chr,
+                             auth_nm_tag_1L_chr = auth_nm_tag_1L_chr)
+  }
+  if(c("DOI","JOURNAL") %>% purrr::map_lgl(~.x %in% names(replacements_ls)) %>% any()){
+    updated_pubs_df <- updated_pubs_df %>%
+      add_jrnl_tags_to_pubs_df()
+      
+  }
+  if(c("DOI","JOURNAL","TYPE") %>% purrr::map_lgl(~.x %in% names(replacements_ls)) %>% any()){
+    updated_pubs_df <- updated_pubs_df %>%
+      add_pub_types_to_pubs_df(preprint_srvrs_chr = preprint_srvrs_chr) 
+  }
+  if("ABSTRACT" %in% names(replacements_ls)){
+    updated_pubs_df <- updated_pubs_df %>%
+      add_summary_tags_to_pubs_df()
+  }
+  if("KEYWORDS" %in% names(replacements_ls)){
+    updated_pubs_df <- updated_pubs_df %>%
+      add_keywd_tags_to_pubs_df()
+  }
+    #add_url_tag_vars_to_pubs_df() %>% # To be added later.
+  return(updated_pubs_df)
+}
+
+
 
 
 ##
