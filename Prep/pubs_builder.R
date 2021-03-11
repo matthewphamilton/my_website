@@ -104,10 +104,23 @@ make_terms_chr <- function(term_1L_chr){
   return(terms_chr)
 }
 make_nm_combns <- function(given_nm_1L_chr,
-                           middle_nms_chr,
+                           middle_nms_chr = NA_character_,
                            family_nm_1L_chr){
-
-  
+  all_names_chr <- c(given_nm_1L_chr, middle_nms_chr, family_nm_1L_chr) %>% na.omit()
+  names_df <- all_names_chr[-length(all_names_chr)] %>%
+    purrr::map_dfc(~c(.x, substring(.x, 1, 1), paste0(substring(.x, 1, 1),"."))) %>%
+    stats::setNames(all_names_chr[-length(all_names_chr)])
+  if(length(all_names_chr)>2)
+    names_df <- 1:length(middle_nms_chr) %>% purrr::reduce(.init = names_df,
+                  ~ dplyr::bind_rows(.x,
+                                     .x[2:nrow(.x),] %>%
+                                       dplyr::mutate(!!rlang::sym(all_names_chr[.y]) := all_names_chr[.y])) %>%
+                    dplyr::distinct())
+  1:ncol(names_df)
+  names_df <- names_df %>%
+    dplyr::mutate(!!rlang::sym(family_nm_1L_chr) := family_nm_1L_chr) 
+  all_nm_combns_chr <- assertr::col_concat(names_df, sep = " ")
+  return(all_nm_combns_chr)
 }
 get_auth_surnm_mtchs <- function(authorship_ls,
                                  surname_1L_chr){
