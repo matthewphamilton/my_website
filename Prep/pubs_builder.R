@@ -474,18 +474,18 @@ make_talks_entries_ls <- function(talks_df,
                                                        auth_nm_tag_1L_chr,
                                                        .x)
                              }), 
-                             collapse = "\n")))
+                             collapse = "\n"))) %>%
     add_unique_talk_ref_to_talks_df() 
   entries_ls <- purrr::pmap(talks_df,
                             ~{
                               ABSTRACT_PLACEHOLDER <- ""#..7
                               ALL_DAY_LGL_PLACEHOLDER <- ..8
-                              AUTHOR_PLACEHODER <- "[]"#..2
+                              AUTHOR_PLACEHODER <- ..2
                               EVENT_PLACEHOLDER <- ..3
                               EVENT_URL_PLACEHOLDER <- ""#..9
                               LOCATION_PLACEHOLDER <- ..4
                               IMG_CAPTION_PLACEHOLDER <- ""#..10
-                              DATE_START_PLACEHOLDER <- ..17
+                              DATE_START_PLACEHOLDER <- ..17 %>% stringr::str_replace_all("\\\"","")
                               URL_SLIDES_PLACEHOLDER <- ""#..12
                               URL_PDF_PLACEHOLDER <- ""#..13
                               URL_CODE_PLACEHOLDER <- ""#..14
@@ -494,7 +494,7 @@ make_talks_entries_ls <- function(talks_df,
                               TITLE_PLACEHOLDER <- ..1
                               PUBLISH_DATE_PLACEHOLDER <- ..6
                               KEYWORDS_PLACEHOLDER <- ..19 %>% stringr::str_replace_all("\\\"","") 
-                              DESCRIPTION_PLACEHOLDER <- ..16
+                              DESCRIPTION_PLACEHOLDER <- ..16 %>% stringr::str_replace_all("\\\"","")
                               talk_entry_chr <- purrr::map_chr(tmpl_talk_md_chr, ~ {
                                 c("ABSTRACT_PLACEHOLDER","ALL_DAY_LGL_PLACEHOLDER","AUTHOR_PLACEHODER",
                                   "EVENT_PLACEHOLDER","EVENT_URL_PLACEHOLDER","LOCATION_PLACEHOLDER",
@@ -565,12 +565,16 @@ unlink(paste0("content/publication/",
        recursive = T)
 names(talks_df)
 
-talks_df <- read.csv("Prep/talks.csv")
+talks_df <- read.csv("Prep/talks.csv") %>%
+  dplyr::filter(DESCRIPTION != "")
 talks_entries_ls <- make_talks_entries_ls(talks_df,
                       tmpl_talk_md_chr = readLines("Prep/talk_template/index.md"),
                       auth_nm_matches_chr = "MP Hamilton",
                       auth_nm_tag_1L_chr = "admin")
-write_widget_entries(talks_entries_ls[1],
+write_widget_entries(talks_entries_ls,
                   pub_entries_dir_1L_chr = "content/talk",
                   overwrite_1L_lgl = F)
+unlink(paste0("content/talk/",
+              c("Coding","Qualitative","Synthesizing")), 
+       recursive = T)
 # Manual edits to Eoin, Mario and pub type for preprint.
