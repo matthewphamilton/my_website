@@ -421,12 +421,12 @@ transform_abstract_ls <- function(abstract_ls){
     })
   return(abstracts_chr)
 }
-write_pub_entries <- function(pubs_entries_ls,
+write_widget_entries <- function(entries_ls,
                               pub_entries_dir_1L_chr,
-                              pub_nm_dir_1L_chr){
-  1:length(pubs_entries_ls) %>% purrr::walk(~{
-    pub_nm_dir_1L_chr <- names(pubs_entries_ls)[.x]
-    pub_entry_chr <- pubs_entries_ls[[.x]]
+                              overwrite_1L_lgl = F){
+  1:length(entries_ls) %>% purrr::walk(~{
+    pub_nm_dir_1L_chr <- names(entries_ls)[.x]
+    pub_entry_chr <- entries_ls[[.x]]
     new_entry_dir_1L_chr <- paste0(pub_entries_dir_1L_chr,"/",pub_nm_dir_1L_chr)
     new_entry_file_1L_chr <- paste0(new_entry_dir_1L_chr,"/index.md")
     if(!dir.exists(new_entry_dir_1L_chr))
@@ -436,14 +436,94 @@ write_pub_entries <- function(pubs_entries_ls,
   }
   )
 }
+add_unique_talk_ref_to_talks_df <- function(talks_df){
+  talks_df <- talks_df %>%
+    dplyr::mutate(unique_talk_ref_nms_chr = talks_df %>% dplyr::select(Title, Event, Location, Year) %>% 
+                    purrr::pmap_chr(~paste0(stringr::word(..1, end=2) %>% stringr::str_replace_all(" ","_"),
+                                            "_",
+                                            stringr::word(..2),
+                                            "_",
+                                            stringr::word(..3),
+                                            "_",
+                                            ..4) %>% stringr::str_replace_all("\\\"","") %>%
+                                      stringr::str_replace_all("\\,","") %>%
+                                      stringr::str_replace_all("\\:","") ) %>% make.unique())
+  return(talks_df)
+}
+make_talks_entries_ls <- function(talks_df,
+                                  tmpl_talk_md_chr,
+                                  auth_nm_matches_chr,
+                                  auth_nm_tag_1L_chr = "admin"){
+  talks_df <- talks_df %>%
+    dplyr::mutate(dplyr::across(.fns = as.character)) %>%
+    add_keywd_tags_to_pubs_df() %>%
+    tibble::as_tibble() %>%
+    dplyr::mutate(author_ls = Author %>% 
+                    purrr::map(~strsplit(.x,(",")) %>% 
+                                 purrr::pluck(1) %>% 
+                                 purrr::map(~.x %>% strsplit(" and ") %>%
+                                                  purrr::pluck(1)) %>%
+                                 purrr::flatten_chr() %>%
+                                 purrr::map_chr(~stringr::str_replace_all(.x,"\\\"",""))
+                               ) %>% 
+                    purrr::map_chr(~
+                                     paste0(" - ",
+                                            .x %>% 
+                                              purrr::map_chr(~{
+                                                ifelse(.x %in% auth_nm_matches_chr,
+                                                       auth_nm_tag_1L_chr,
+                                                       .x)
+                             }), 
+                             collapse = "\n")))
+    add_unique_talk_ref_to_talks_df() 
+  entries_ls <- purrr::pmap(talks_df,
+                            ~{
+                              ABSTRACT_PLACEHOLDER <- ""#..7
+                              ALL_DAY_LGL_PLACEHOLDER <- ..8
+                              AUTHOR_PLACEHODER <- "[]"#..2
+                              EVENT_PLACEHOLDER <- ..3
+                              EVENT_URL_PLACEHOLDER <- ""#..9
+                              LOCATION_PLACEHOLDER <- ..4
+                              IMG_CAPTION_PLACEHOLDER <- ""#..10
+                              DATE_START_PLACEHOLDER <- ..17
+                              URL_SLIDES_PLACEHOLDER <- ""#..12
+                              URL_PDF_PLACEHOLDER <- ""#..13
+                              URL_CODE_PLACEHOLDER <- ""#..14
+                              URL_VIDEO_PLACEHOLDER <- ..15
+                              SUMMARY_PLACEHOLDER <- ""#..7
+                              TITLE_PLACEHOLDER <- ..1
+                              PUBLISH_DATE_PLACEHOLDER <- ..6
+                              KEYWORDS_PLACEHOLDER <- ..19 %>% stringr::str_replace_all("\\\"","") 
+                              DESCRIPTION_PLACEHOLDER <- ..16
+                              talk_entry_chr <- purrr::map_chr(tmpl_talk_md_chr, ~ {
+                                c("ABSTRACT_PLACEHOLDER","ALL_DAY_LGL_PLACEHOLDER","AUTHOR_PLACEHODER",
+                                  "EVENT_PLACEHOLDER","EVENT_URL_PLACEHOLDER","LOCATION_PLACEHOLDER",
+                                  "IMG_CAPTION_PLACEHOLDER", "DATE_START_PLACEHOLDER","URL_SLIDES_PLACEHOLDER",
+                                  "URL_PDF_PLACEHOLDER", "URL_CODE_PLACEHOLDER", "URL_VIDEO_PLACEHOLDER",
+                                  "SUMMARY_PLACEHOLDER", "TITLE_PLACEHOLDER","PUBLISH_DATE_PLACEHOLDER",
+                                  "KEYWORDS_PLACEHOLDER","DESCRIPTION_PLACEHOLDER") %>% purrr::reduce(.init = .x,
+                                                                               ~ stringr::str_replace_all(.x,
+                                                                                                          .y,
+                                                                                                          eval(parse(text=.y))
+                                                                               ))
+                                
+                              }) 
+                              index_1L_int <- stringr::str_locate(talk_entry_chr, "# No Keywords") %>% 
+                                tibble::as_tibble() %>% 
+                                dplyr::mutate(index_int = 1:length(talk_entry_chr)) %>% 
+                                na.omit() %>% dplyr::pull(index_int)
+                              if(!identical(integer(0),index_1L_int))
+                                talk_entry_chr[index_1L_int-1] <- "# tags:"
+                              talk_entry_chr
+                              #
+                            }) %>%
+    stats::setNames(talks_df$unique_talk_ref_nms_chr)
+  return(entries_ls)
+}
 ## Application
 # scholar_pubs_tb <- scholar::get_publications("t1ZHrCoAAAAJ") %>%
 #   tibble::as_tibble() # Update with ready4show ref once migration complete
-
 # Note : need to write script that compacts keywords and place call here
-# bib_pubs_df <- bib2df::bib2df("PREP/My_PR_PUBS.bib") 
-# surname_matches_chr <- get_auth_surnm_mtchs(bib_pubs_df$AUTHOR,
-#                                             "Hamilton")
 pubs_df <- make_pubs_df(path_to_bib_1L_chr = "PREP/My_PR_PUBS.bib",
                         given_nm_1L_chr = "Matthew",
                         middle_nms_chr = "Phillip",
@@ -473,28 +553,24 @@ pubs_df <- pubs_df %>%
                                                                "https://www.mja.com.au/journal/2017/206/11/broken-promises-and-missing-steps-mental-health-reform",
                                                                "https://onlinelibrary.wiley.com/doi/10.1111/eip.13100")
                                                        ))
-
-
-# idx_1L_int <- 1L
-# .x<- pubs_df
-# .y<- 1L
-
-
-
-##
-##
-##
-
 pubs_entries_ls <- make_pubs_entries_ls(pubs_df,
-                                        tmpl_pub_md_chr = readLines("Prep/template/index.md"))
-pub_entries_dir_1L_chr <- "content/publication"
-overwrite_1L_lgl <- F
+                                        tmpl_pub_md_chr = readLines("Prep/pub_template/index.md"))
 
-# index_1L_int <- stringr::str_locate(pub_entry_chr, "# No Keywords") %>% tibble::as_tibble() %>% dplyr::mutate(index_int = 1:length(pub_entry_chr)) %>% na.omit() %>% dplyr::pull(index_int)
-# if(!identical(integer(0),index_1L_int))
-#   pub_entry_chr[index_1L_int-1] <- "# tags:"
-#pub_entry_chr[4] <- pub_entry_chr[4] %>% stringr::str_replace_all("â€ "," ")
+write_widget_entries(pubs_entries_ls,
+                  pub_entries_dir_1L_chr = "content/publication",
+                  overwrite_1L_lgl = F)
 
+unlink(paste0("content/publication/",
+              c("conference-paper","journal-article","preprint")), 
+       recursive = T)
+names(talks_df)
 
-
+talks_df <- read.csv("Prep/talks.csv")
+talks_entries_ls <- make_talks_entries_ls(talks_df,
+                      tmpl_talk_md_chr = readLines("Prep/talk_template/index.md"),
+                      auth_nm_matches_chr = "MP Hamilton",
+                      auth_nm_tag_1L_chr = "admin")
+write_widget_entries(talks_entries_ls[1],
+                  pub_entries_dir_1L_chr = "content/talk",
+                  overwrite_1L_lgl = F)
 # Manual edits to Eoin, Mario and pub type for preprint.

@@ -2,7 +2,7 @@
 authors:
 - admin
 avatar_image: default.png
-bio: I am an economist specialising in developing and validating modular, replicable and generalisable mental health models.
+bio: 
 btn:
 - label: Download My CV (PDF)
   url: https://matthewphamilton.github.io/mybio/Docs/MPHamiltonCV.pdf
