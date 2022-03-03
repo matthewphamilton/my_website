@@ -340,11 +340,11 @@ replace_mssng_vals_in_pubs_df <- function(pubs_df,
                                                                    dplyr::mutate(!!rlang::sym(names(replacements_ls)[.y]) := dplyr::case_when(unique_pub_ref_nms_chr %in% mssng_vals_ls[[.y]] ~ unique_pub_ref_nms_chr %>%
                                                                                                                                                 purrr::map_chr(~{
                                                                                                                                                   ifelse(.x %in% replacement_lup$ref_chr,
-                                                                                                                                                         ready4fun::get_from_lup_obj(replacement_lup,
+                                                                                                                                                         ready4::get_from_lup_obj(replacement_lup,
                                                                                                                                                                                      target_var_nm_1L_chr = "val_chr",
                                                                                                                                                                                      match_var_nm_1L_chr = "ref_chr",
                                                                                                                                                                                      match_value_xx = .x,
-                                                                                                                                                                                     evaluate_lgl = F),
+                                                                                                                                                                                     evaluate_1L_lgl = F),
                                                                                                                                                          NA_character_)}),
                                                                                                                                               T ~ !!rlang::sym(names(replacements_ls)[.y])))
                                                                })
