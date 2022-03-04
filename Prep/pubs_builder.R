@@ -232,9 +232,15 @@ make_pubs_df <- function(path_to_bib_1L_chr,
                                         middle_nms_chr = middle_nms_chr,
                                         family_nm_1L_chr = family_nm_1L_chr)
   spine_of_pubs_df <- bib_pubs_df <- bib2df::bib2df(path_to_bib_1L_chr) 
+  spine_of_pubs_df <- spine_of_pubs_df %>%
+    dplyr::mutate(DOI = purrr::map_chr(DOI,
+                                       ~ ifelse(is.na(.x) | startsWith(.x,"https://doi.org/"),
+                                                .x,
+                                                paste0("https://doi.org/",.x))))
   cref_res_ls <- make_cref_res_ls(spine_of_pubs_df$DOI)
   pubs_df <- spine_of_pubs_df %>%
-    add_doi_tags_to_pubs_df() %>%
+    add_doi_tags_to_pubs_df() 
+  pubs_df <- pubs_df %>%
     add_auth_tags_to_pubs_df(cref_res_ls = cref_res_ls,
                              auth_nm_matches_chr = auth_nm_matches_chr,
                              auth_nm_tag_1L_chr = auth_nm_tag_1L_chr) %>%
@@ -520,7 +526,11 @@ make_talks_entries_ls <- function(talks_df,
     stats::setNames(talks_df$unique_talk_ref_nms_chr)
   return(entries_ls)
 }
+
 ## Application
+library(ready4)
+# rbibutils::bibConvert("Prep/filia.nbib",
+#                       "Prep/filia.bib")
 # scholar_pubs_tb <- scholar::get_publications("t1ZHrCoAAAAJ") %>%
 #   tibble::as_tibble() # Update with ready4show ref once migration complete
 # Note : need to write script that compacts keywords and place call here
@@ -528,17 +538,20 @@ pubs_df <- make_pubs_df(path_to_bib_1L_chr = "PREP/My_PR_PUBS.bib",
                         given_nm_1L_chr = "Matthew",
                         middle_nms_chr = "Phillip",
                         family_nm_1L_chr = "Hamilton",
-                        preprint_srvrs_chr = c("aRXiv", "bioRxiv","medRxiv")) 
+                        preprint_srvrs_chr = c("aRXiv", "bioRxiv","medRxiv","Research Square")) 
+mssng_vals_ls <- make_mssng_vals_ls(pubs_df)
 pubs_df <- pubs_df %>% 
-  replace_mssng_vals_in_pubs_df(mssng_vals_ls = make_mssng_vals_ls(pubs_df),
+  replace_mssng_vals_in_pubs_df(mssng_vals_ls = mssng_vals_ls,
                                 replacements_ls = list(ABSTRACT = c("A brief opinion piece concerning mental health reform in Australia.",
                                                                     "A suggested policy framework for addressing mental health reform in Australia. Addresses the failure to resource and integrate mental health into the mainstream of the health care system."),
-                                                       KEYWORDS = c("assessment, headspace, mental health, need, neuropsychology, survey, youth",
+                                                       KEYWORDS = c("anxiety, AQoL, depression, psychological distress, QALYs, utility mapping",
+                                                                    "suicide prevention, schools, psychoeducation, screening, iCBT",
+                                                                    "assessment, headspace, mental health, need, neuropsychology, survey, youth",
                                                                     "internal self-management, external strategies, environmental modification, errorless learning, schizophrenia, severe mental illness, functional outcome",
                                                                     "psoriasis, clinician training, clinician decision-making, guideline concordance, motivational interviewing",
                                                                     "Neuropsychological assessment, headspace, need, nonmetropolitan, youth mental health",
                                                                     "qualitative methods, risk factors, service models, social proximity, youth mental health",
-                                                                    "Bioaerosol, Respiratory infection, Multi-route transmission, Short-range airborne route, Long-range airborne route, Building ventilation",
+                                                                    #"Bioaerosol, Respiratory infection, Multi-route transmission, Short-range airborne route, Long-range airborne route, Building ventilation",
                                                                     "Health services administration, Health occupations, Mental disorders",
                                                                     "Health services administration Mental disorders General medicine",
                                                                     "Psoriasis, treatment, economic-evaluation",
@@ -557,16 +570,16 @@ pubs_entries_ls <- make_pubs_entries_ls(pubs_df,
                                         tmpl_pub_md_chr = readLines("Prep/pub_template/index.md"))
 
 write_widget_entries(pubs_entries_ls,
-                  pub_entries_dir_1L_chr = "content/publication",
-                  overwrite_1L_lgl = F)
+                     pub_entries_dir_1L_chr = "content/publication",
+                     overwrite_1L_lgl = F)
 
 unlink(paste0("content/publication/",
               c("conference-paper","journal-article","preprint")), 
        recursive = T)
-names(talks_df)
 
 talks_df <- read.csv("Prep/talks.csv") %>%
   dplyr::filter(DESCRIPTION != "")
+names(talks_df)
 talks_entries_ls <- make_talks_entries_ls(talks_df,
                       tmpl_talk_md_chr = readLines("Prep/talk_template/index.md"),
                       auth_nm_matches_chr = "MP Hamilton",
