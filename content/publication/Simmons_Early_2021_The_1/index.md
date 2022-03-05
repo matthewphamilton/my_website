@@ -31,8 +31,8 @@ projects: []
 # url_slides: ''
 # url_source: ''
 # url_video: '' 
-publication: '*Early Interv Psychiatry*'
-publication_short: "Early Interv Psychiatry"
+publication: '*Early Intervention in Psychiatry*'
+publication_short: "Early Intervention in Psychiatry"
 publication_types:
 - "2"
 publishDate: "2021-01-15T03:50:15Z"

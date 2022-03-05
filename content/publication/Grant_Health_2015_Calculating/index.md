@@ -12,7 +12,7 @@ authors:
  - Linda Davies
  - Charles N McCollum
 date: "2015-05-01T06:51:31Z"
-doi: 10.3310/hta19320
+doi: https://doi.org/10.3310/hta19320
 featured: true
 image:
   caption: "'CAPTION_PLACEHOLDER'"

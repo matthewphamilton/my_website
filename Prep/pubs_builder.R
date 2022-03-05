@@ -5,7 +5,8 @@ add_auth_tags_to_pubs_df <- function(pubs_df,
                                      auth_nm_tag_1L_chr = "admin"){
   pubs_df <- pubs_df %>%
     dplyr::mutate(auth_first_family_ls = DOI %>% 
-                    purrr::map(~ if(is.na(.x)){
+                    purrr::map(~ if(is.na(.x) | is.null(cref_res_ls %>%
+                                                        purrr::pluck(.x))){
                       names_chr <- NA_character_
                     }else{
                       cref_res_ls %>%
@@ -39,17 +40,22 @@ add_auth_tags_to_pubs_df <- function(pubs_df,
                     })) 
   return(pubs_df)
 }
-add_jrnl_tags_to_pubs_df <-  function(pubs_df){
+add_jrnl_tags_to_pubs_df <-  function(pubs_df,
+                                      cref_res_ls = cref_res_ls){
   pubs_df <- pubs_df %>%
-    dplyr::mutate(jrnl_long_nm_tags_chr = purrr::map2_chr(.$DOI, 
-                                                          .$JOURNAL,
-                                                          ~ ifelse(is.na(.x),
-                                                                   .y, 
+    dplyr::mutate(jrnl_long_nm_tags_chr = purrr::pmap_chr(pubs_df %>%
+                                                            dplyr::select(DOI, JOURNAL, TYPE),
+                                                          ~ ifelse(is.na(..1),
+                                                                   ..2, 
                                                                    {jrnl_long_1L_chr <- cref_res_ls %>%
-                                                                     purrr::pluck(.x) %>%
+                                                                     purrr::pluck(..1) %>%
                                                                      purrr::pluck("container-title")
                                                                    if(is.null(jrnl_long_1L_chr))
-                                                                     jrnl_long_1L_chr <- .y
+                                                                     jrnl_long_1L_chr <- ifelse(..3 %in% c("Program","Library"),
+                                                                                                "Zenodo",
+                                                                                                ifelse(..3 %in% c("Results","Synthetic"),
+                                                                                                       "Harvard Dataverse",
+                                                                                                       ..2))
                                                                    jrnl_long_1L_chr
                                                                    }))) %>%
     dplyr::mutate(jrnl_short_nm_tags_chr = purrr::map2_chr(.$DOI, 
@@ -193,7 +199,8 @@ add_publn_date_tags_to_pubs_df <- function(pubs_df,
                                            cref_res_ls){
   pubs_df <- pubs_df %>%
     dplyr::mutate(publn_date_tags_chr = DOI %>% 
-                    purrr::map_chr(~ ifelse(is.na(.x),
+                    purrr::map_chr(~ ifelse(is.na(.x) | is.null(cref_res_ls %>%
+                                                                  purrr::pluck(.x)),
                                             NA_character_, 
                                             cref_res_ls %>%
                                               purrr::pluck(.x) %>%
@@ -213,13 +220,18 @@ add_pub_types_to_pubs_df <- function(pubs_df,
   pubs_df <- pubs_df %>%
     dplyr::mutate(pub_type_tags_chr = purrr::map2_chr(.$TYPE,
                                                       .$jrnl_long_nm_tags_chr, 
-                                                      ~ ifelse(is.na(.x),
-                                                               "3",
-                                                               ifelse(.x == "Journal Article",
-                                                               ifelse(.y %in% preprint_srvrs_chr,
-                                                                      "3",
-                                                                      "2"),
-                                                               "4"))))
+                                                      ~ ifelse(.x %in% c("Program","Library"),
+                                                               "9",
+                                                               ifelse(.x %in% c("Results","Synthetic"),
+                                                                      "10",
+                                                                      ifelse(is.na(.x),
+                                                                             "3",
+                                                                             ifelse(.x == "Journal Article",
+                                                                                    ifelse(.y %in% preprint_srvrs_chr,
+                                                                                           "3",
+                                                                                           "2"),
+                                                                                    "4"))))
+                                                      ))
   return(pubs_df)
 }
 make_pubs_df <- function(path_to_bib_1L_chr,
@@ -248,7 +260,7 @@ make_pubs_df <- function(path_to_bib_1L_chr,
     add_url_tag_vars_to_pubs_df() %>%
     add_keywd_tags_to_pubs_df() %>%
     add_publn_date_tags_to_pubs_df(cref_res_ls = cref_res_ls) %>%
-    add_jrnl_tags_to_pubs_df() %>%
+    add_jrnl_tags_to_pubs_df(cref_res_ls = cref_res_ls) %>%
     add_pub_types_to_pubs_df(preprint_srvrs_chr = preprint_srvrs_chr) %>%
     dplyr::select(TITLE,
                   ABSTRACT, abstract_tags_chr, summary_tags_chr, AUTHOR, auth_tags_chr, DOI, doi_tags_chr, JOURNAL, VOLUME, NUMBER, PAGES, jrnl_long_nm_tags_chr, jrnl_short_nm_tags_chr, KEYWORDS, keywd_tags_chr, YEAR, publn_date_tags_chr, CATEGORY, TYPE, pub_type_tags_chr,
@@ -320,11 +332,13 @@ make_unique_pub_ref_nms <- function(pubs_df){
   unique_pub_dir_nms_chr <- pubs_df %>% 
     purrr::pmap_chr(~paste0(stringr::word(..5[1]) %>% 
                               stringr::str_replace(",",""),
-                            "_",stringr::word(..9),
+                            "_",
+                            stringr::word(..13),
                             "_",
                             ..17,
                             "_",
-                            stringr::word(..1)))%>% 
+                            stringr::word(..1))) %>% 
+    stringr::str_replace_all("\\:","_") %>%
     make.unique() %>% 
     stringr::str_replace_all("\\.","_")
   return(unique_pub_dir_nms_chr)
@@ -371,7 +385,7 @@ replace_mssng_vals_in_pubs_df <- function(pubs_df,
   }
   if(c("DOI","JOURNAL") %>% purrr::map_lgl(~.x %in% names(replacements_ls)) %>% any()){
     updated_pubs_df <- updated_pubs_df %>%
-      add_jrnl_tags_to_pubs_df()
+      add_jrnl_tags_to_pubs_df(cref_res_ls = cref_res_ls)
     
   }
   if(c("DOI","JOURNAL","TYPE") %>% purrr::map_lgl(~.x %in% names(replacements_ls)) %>% any()){
@@ -559,7 +573,12 @@ pubs_df <- pubs_df %>%
                                                                     "Health services administration, Mental disorders",
                                                                     "adolescent, depression, Internet, recurrence, secondary prevention",
                                                                     "cognitive behaviour therapy, graphic medicine, online psychosocial interventions, peer support, social anxiety"),
-                                                       publn_date_tags_chr = "2015-12-10T00:00:00Z",
+                                                       publn_date_tags_chr = c(paste0("2022-02-",
+                                                                                      c(rep("0",9),
+                                                                                        rep("",6)),
+                                                                                      1:15,
+                                                                                      "T00:00:00Z"),
+                                                                               "2015-12-10T00:00:00Z"),
                                                        URL = c("https://www.tandfonline.com/doi/abs/10.1080/21622965.2019.1624170?journalCode=hapc20",
                                                                "https://link.springer.com/article/10.1007/s00127-020-02020-6",
                                                                "https://journals.sagepub.com/doi/10.1177/0004867415624553",
@@ -572,7 +591,6 @@ pubs_entries_ls <- make_pubs_entries_ls(pubs_df,
 write_widget_entries(pubs_entries_ls,
                      pub_entries_dir_1L_chr = "content/publication",
                      overwrite_1L_lgl = F)
-
 unlink(paste0("content/publication/",
               c("conference-paper","journal-article","preprint")), 
        recursive = T)

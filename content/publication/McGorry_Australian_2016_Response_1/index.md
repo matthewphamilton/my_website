@@ -6,7 +6,7 @@ authors:
  - Kerryn Pennell
  - Matthew Hamilton
 date: "2015-12-25T12:22:19Z"
-doi: 10.1177/0004867415624552
+doi: https://doi.org/10.1177/0004867415624552
 featured: true
 image:
   caption: "'CAPTION_PLACEHOLDER'"

@@ -33,9 +33,9 @@ projects: []
 # url_source: ''
 # url_video: '' 
 publication: '*Social Psychiatry and Psychiatric Epidemiology*'
-publication_short: "Social Psychiatry and Psychiatric Epidemiology"
+publication_short: "Soc Psychiatry Psychiatr Epidemiol"
 publication_types:
-- "3"
+- "2"
 publishDate: "2021-06-06T12:04:17Z"
 summary: "BACKGROUND: headspace centres provide enhanced primary mental healthcare for young  people.  A priority is to provide services for all young people irrespective of a  range of social disadvantages or social exclusion..."
 tags:

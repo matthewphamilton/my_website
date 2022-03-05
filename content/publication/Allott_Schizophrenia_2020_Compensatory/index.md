@@ -13,7 +13,7 @@ authors:
  - Eoin Killackey
  - Dawn Velligan
 date: "2019-12-12T20:10:17Z"
-doi: 10.1093/schbul/sbz134
+doi: https://doi.org/10.1093/schbul/sbz134
 featured: true
 image:
   caption: "'CAPTION_PLACEHOLDER'"

@@ -12,7 +12,7 @@ authors:
  - Debra Rickwood
  - Kelly Allott
 date: "2019-07-14T12:05:37Z"
-doi: 10.1080/21622965.2019.1624170
+doi: https://doi.org/10.1080/21622965.2019.1624170
 featured: true
 image:
   caption: "'CAPTION_PLACEHOLDER'"

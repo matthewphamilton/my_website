@@ -6,7 +6,7 @@ authors:
  - Sherilyn Goldstone
  - Debra J Rickwood
 date: "2015-12-25T12:22:19Z"
-doi: 10.1177/0004867415624553
+doi: https://doi.org/10.1177/0004867415624553
 featured: true
 image:
   caption: "'CAPTION_PLACEHOLDER'"

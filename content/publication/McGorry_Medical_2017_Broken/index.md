@@ -4,7 +4,7 @@ authors:
  - Patrick D McGorry
  - admin
 date: "2017-06-15T08:23:44Z"
-doi: 10.5694/mja17.00329
+doi: https://doi.org/10.5694/mja17.00329
 featured: true
 image:
   caption: "'CAPTION_PLACEHOLDER'"

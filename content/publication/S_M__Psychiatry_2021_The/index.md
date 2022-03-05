@@ -34,7 +34,7 @@ projects: []
 publication: '*Psychiatry Research*'
 publication_short: "Psychiatry Research"
 publication_types:
-- "3"
+- "2"
 publishDate: "2021-08-21T05:48:30Z"
 summary: "This is the first study to describe psychometric properties of the Kessler Psychological Distress Scale (K6) in a large cohort of help-seeking young people presenting to primary mental health care services.  The aim was to determine whether the K6 was appropriate for monitoring outcomes in such settings. 1067 young people were recruited from Australian headspace services..."
 tags:

@@ -15,7 +15,7 @@ authors:
  - P. McGorry
  - S. Cotton
 date: "2021-01-16T09:03:48Z"
-doi: 10.1007/s00127-020-02020-6
+doi: https://doi.org/10.1007/s00127-020-02020-6
 featured: true
 image:
   caption: "'CAPTION_PLACEHOLDER'"
