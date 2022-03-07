@@ -24,6 +24,11 @@
   name = "Publications"
   url = "publication"
 
+#[[main]]
+#  parent = "Outputs"
+#  name = "Software"
+#  url = "pubs/software"
+
 [[main]]
    name = "CV (PDF)"
    url = "https://matthewphamilton.github.io/mybio/Docs/MPHamiltonCV.pdf"

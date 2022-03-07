@@ -7,8 +7,8 @@ headless = true  # This file represents a page section.
 active = true  # Activate this widget? true/false
 weight = 90  # Order that this section will appear.
 
-title = "New Contributions"
-subtitle = "Other recently released output that I have contributed to"
+title = "Published work"
+subtitle = "Scientific manuscripts, academic software and datasets"
 
 [content]
   # Page type to display. E.g. post, talk, or publication.
@@ -27,7 +27,7 @@ subtitle = "Other recently released output that I have contributed to"
   [content.filters]
     tag = ""
     category = ""
-    publication_type = "3"
+    publication_type = ""
     exclude_featured = false
   
 [design]

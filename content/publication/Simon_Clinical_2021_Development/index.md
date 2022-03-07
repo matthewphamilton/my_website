@@ -16,7 +16,7 @@ authors:
  - Simmone Howell
  - Christopher Miles
  - Marc Pearson
- - Mario Alvarez-Jim?nez
+ - Mario Alvarez-Jiminez
 date: "2021-05-27T07:04:06Z"
 doi: https://doi.org/10.1080/13284207.2021.1923128
 featured: true
@@ -39,9 +39,9 @@ projects: []
 publication: '*Clinical Psychologist*'
 publication_short: "Clinical Psychologist"
 publication_types:
-- "3"
+- "2"
 publishDate: "2021-05-27T07:04:06Z"
-summary: "**ABSTRACTObjective** The objective of the Entourage project was to develop an innovative digital mental health intervention addressing key barriers experienced by young people in accessing evidence?? based therapy for social anxiety.  In particular, Entourage takes a specific focus on reaching young men, given their lower rates of service engagement.Method This article discusses the theoretical underpinnings, therapeutic mechanisms, persuasive technology elements, and development process of a novel approach incorporating graphic medicine, clinical and peer support, and social networking.Results Based on an integrated cognitive model of social anxiety disorder and consistent with the principles of cognitive behavioural therapy (CBT), a novel digital intervention for social anxiety was developed (Entourage)..."
+summary: "**Objective** The objective of the Entourage project was to develop an innovative digital mental health intervention addressing key barriers experienced by young people in accessing evidence?? based therapy for social anxiety.  In particular, Entourage takes a specific focus on reaching young men, given their lower rates of service engagement. **Method** This article discusses the theoretical underpinnings, therapeutic mechanisms, persuasive technology elements, and development process of a novel approach incorporating graphic medicine, clinical and peer support, and social networking.Results Based on an integrated cognitive model of social anxiety disorder and consistent with the principles of cognitive behavioural therapy (CBT), a novel digital intervention for social anxiety was developed (Entourage)..."
 tags:
  - COGNITIVE BEHAVIOUR THERAPY
  - GRAPHIC MEDICINE
