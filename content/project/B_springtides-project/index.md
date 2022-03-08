@@ -14,9 +14,9 @@ image:
 summary: A model of places.
 weight: 2
 tags:
-- Spatial models
-- Model modules
-- Models
+- SPATIAL MODELS
+- MODEL MODULES
+- MODELS
 title: Springtides
 url_code: ""
 url_pdf: "https://dataverse.harvard.edu/file.xhtml?fileId=4419934&version=1.0#"

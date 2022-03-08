@@ -14,11 +14,11 @@ links:
 summary: A model of platforms.
 weight: 5
 tags:
-- Primary Mental Health Care
-- Health Services Models
-- Discrete Event Simulation
-- Model modules
-- Models
+- PRIMARY MENTAL HEALTH
+- HEALTH SERVICES
+- DISCRETE EVENT SIMULATION
+- MODEL MODULES
+- MODELS
 title: First Bounce
 url_code: ""
 url_pdf: ""

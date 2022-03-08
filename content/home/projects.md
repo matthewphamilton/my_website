@@ -27,19 +27,19 @@ subtitle = "What I am currently working on"
   
   [[content.filter_button]]
     name = "Framework"
-    tag = "ready4 framework"
+    tag = "READY4 FRAMEWORK"
   
   [[content.filter_button]]
     name = "Models (Modules)"
-    tag = "Model modules"
+    tag = "MODEL MODULES"
     
   [[content.filter_button]]
     name = "Models (System)"
-    tag = "Systems models"
+    tag = "SYSTEMS MODELS"
     
   [[content.filter_button]]
     name = "Models (All)"
-    tag = "Models"  
+    tag = "MODELS"  
 
 [design]
   # Choose how many columns the section has. Valid values: 1 or 2.

@@ -37,7 +37,7 @@ publication_short: "medRxiv"
 publication_types:
 - "3"
 publishDate: "2021-07-09T09:36:55Z"
-summary: "**Background** Quality Adjusted Life Years (QALYs) are often used in economic evaluations, yet utility weights for deriving them are rarely directly measured in mental health services.Objectives We aimed to: (i) identify the best Transfer To Utility (TTU) algorithms and predictors for adolescent weighted Assessment of Quality of Life - six dimensions (AQoL-6D) health utility and (ii) assess ability of TTU algorithms to predict longitudinal change.Methods We recruited 1107 young people attending Australian primary mental health services, collecting data at two time points, three months apart.  Five linear and three generalised linear models were explored to identify the best TTU algorithm..."
+summary: "**Background** Quality Adjusted Life Years (QALYs) are often used in economic evaluations, yet utility weights for deriving them are rarely directly measured in mental health services. ***Objectives** We aimed to: (i) identify the best Transfer To Utility (TTU) algorithms and predictors for adolescent weighted Assessment of Quality of Life - six dimensions (AQoL-6D) health utility and (ii) assess ability of TTU algorithms to predict longitudinal change. *Methods** We recruited 1107 young people attending Australian primary mental health services, collecting data at two time points, three months apart.  Five linear and three generalised linear models were explored to identify the best TTU algorithm..."
 tags:
  - ANXIETY
  - AQOL

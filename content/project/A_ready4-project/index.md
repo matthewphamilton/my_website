@@ -14,7 +14,7 @@ links:
 summary: A modelling framework.
 weight: 1
 tags:
-- ready4 framework
+- READY4 FRAMEWORK
 title: ready4
 url_code: "https://ready4-dev.github.io/ready4/"
 url_pdf: ""

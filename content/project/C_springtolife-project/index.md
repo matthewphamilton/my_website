@@ -14,12 +14,12 @@ image:
 summary: A model of people.
 weight: 3
 tags:
-- Choice models
-- Microsimulation
-- Model modules
-- Outcome measurement
-- Utility mapping
-- Models
+- CHOICE MODELS
+- MICROSIMULATION
+- MODEL MODULES
+- OUTCOME MEASUREMENT
+- UTILITY MAPPING
+- MODELS
 title: Spring To Life
 url_code: ""
 url_pdf: ""

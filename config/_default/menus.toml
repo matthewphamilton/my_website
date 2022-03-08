@@ -18,16 +18,16 @@
   url = "#"
   hasChildren = true
   weight = 40
-
+  
 [[main]]
-  parent = "Outputs"
   name = "Publications"
   url = "publication"
-
-#[[main]]
-#  parent = "Outputs"
-#  name = "Software"
-#  url = "pubs/software"
+  parent = "Outputs"
+  
+[[main]]
+  name = "Talks"
+  url = "talk"
+  parent = "Outputs"
 
 [[main]]
    name = "CV (PDF)"

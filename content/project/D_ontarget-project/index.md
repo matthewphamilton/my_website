@@ -14,10 +14,10 @@ links:
 summary: A model of programs.
 weight: 4
 tags:
-- Programs
-- Treatments
-- Model modules
-- Models
+- PROGRAMS
+- TREATMENTS
+- MODEL MODULES
+- MODELS
 title: On target
 url_code: ""
 url_pdf: ""
