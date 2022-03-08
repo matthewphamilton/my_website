@@ -3,7 +3,7 @@
 widget = "featurette"  # See https://sourcethemes.com/academic/docs/page-builder/
 headless = true  # This file represents a page section.
 active = true  # Activate this widget? true/false
-weight = 30  # Order that this section will appear.
+weight = 120  # Order that this section will appear.
 
 title = "Skills"
 subtitle = ""
@@ -16,28 +16,29 @@ subtitle = ""
 # https://fontawesome.com/icons?d=gallery&p=2
 # https://jpswalsh.github.io/academicons/
 # Tutorial: https://www.rollagain.net/post/adding-custom-icons-to-the-hugo-academic-theme/
-[[feature]]
-  icon = "chart-line"
-  icon_pack = "fas"
-  name = "Economic modelling"
-  parcent = "90%"
-  
+
 [[feature]]
   icon = "r-project"
   icon_pack = "fab"
   name = "Reproducible science"
-  parcent = "90%"
+  parcent = "85%"
+
+[[feature]]
+  icon = "chart-line"
+  icon_pack = "fas"
+  name = "Economic modelling"
+  parcent = "80%"
+
+[[feature]]
+  icon = "exchange-alt"
+  icon_pack = "fas"
+  name = "Policy analysis"
+  parcent = "75%"
 
 [[feature]]
   icon = "handshake"
   icon_pack = "fas"
   name = "Communication"
-  parcent = "85%"  
-
-[[feature]]
-  icon = "exchange-alt"
-  icon_pack = "fas"
-  name = "Policy innovation"
-  parcent = "80%"
+  parcent = "75%"  
 
 +++

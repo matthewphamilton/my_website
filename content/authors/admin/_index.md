@@ -43,7 +43,7 @@ user_groups:
 - Visitors
 ---
 
-I am a research economist at [Orygen](https://www.orygen.org.au/), where I work to improve mental health outcomes for young people. My main focus is to identify better approaches to financing and organising systems that support the mental health of young people by exploring those systems using a novel modelling framework. 
+I am a research economist at [Orygen](https://www.orygen.org.au/), where I work to improve mental health outcomes for young people. My main focus is to identify better approaches to financing and organising the systems that support the mental health of young people by exploring those systems using a novel modelling framework. 
 
-I feel extraordinarily lucky to get to do this work as it is both intellectually stimulating (I like doing sums and writing algorithms), involves collaborations with great colleagues and draws on and develops the values and experiences I have developed prior to commencing my research career.
+I believe that for models to be trustworthy they should be as transparent as possible and that modelling mental health systems is a complex task that is best approached iteratively and collaboratively. For these reasons, the models I work on adopt open source approaches.
 
