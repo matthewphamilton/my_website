@@ -14,8 +14,8 @@ image:
 summary: A model of systems.
 weight: 6
 tags:
-- Systems models
-- Models
+- SYSTEMS MODELS
+- MODELS
 title: Readyforwhatsnext
 url_code: ""
 url_pdf: ""
