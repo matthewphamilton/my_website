@@ -35,8 +35,8 @@ In collaboration with colleagues at the University of Sydney, Springtides was de
 
 Some background about the model is provided in [this poster](https://dataverse.harvard.edu/file.xhtml?fileId=4419934&version=1.0#) and from about the 55 minute mark of [this webinar](https://www.youtube.com/watch?v=b6g_DzBPOqo). 
 
+### Software
+Some [development version software is already available](https://www.ready4-dev.com/docs/model/modules/using-modules/places/), with [future development releases planned](https://www.ready4-dev.com/docs/model/modules/pipeline/pipeline-places/).
+
 ### Dataset
 Some of the input data of the demographic module of Springtides is available in an [online repository](https://doi.org/10.7910/DVN/JHSCDJ).
-
-## Future releases
-The Springtides model is currently undergoing substantial redevelopment in preparation for a public release of its underlying code. Once that release occurs, future development will focus on broadening the focus of the data-packs associated with springtides (ie to include items other than demographic and prevalence rate parameters).

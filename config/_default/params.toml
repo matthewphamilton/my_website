@@ -15,7 +15,7 @@ day_night = true
 font = "classic"
 
 # Description for social sharing and search engines. If undefined, superuser role is used in place.
-description = "Professional profile of economist and mental health modeller Matthew Hamilton"
+description = "Professional profile of economist and computational modeller Matthew Hamilton"
 
 # Default image for social sharing and search engines. Place image in `static/img/` folder and specify image name here.
 sharing_image = "default.png"
@@ -53,9 +53,9 @@ time_format = "3:04 PM"
 ############################
 
 # Enter contact details (optional). To hide a field, clear it to "".
-email = "matthew.hamilton@orygen.org.au"
+email = "matthew.hamilton1@monash.edu.au"
 phone = ""
-address = "35 Poplar Road, Parkville, Victoria Australia"
+address = "School of Public Health and Preventive Medicine, Monash University, 553 St Kilda Road, Melbourne VIC 3004"
 
 # Office hours: use `<br>` to insert a line break, or set to "" to remove office hours
 office_hours = ""

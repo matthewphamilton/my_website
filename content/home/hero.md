@@ -42,6 +42,6 @@ hero_media = "matt-hs.jpg"
   label = "Contact me"
 
 +++
-## My name is **Matthew Hamilton** and I'm an **Economist** specializing in building **Mental Health Models**.
+## My name is **Matthew Hamilton** and I'm an **Economist** who develops and applies **Transparent, Reusable and Updatable** computational models.
 
-I work on projects aimed at achieving better mental health outcomes for young people.
+The goal of my work is to help improve health system design and health policy development.

@@ -6,6 +6,14 @@ rbibutils::bibConvert("Prep/nihr.nbib",
 # scholar_pubs_tb <- scholar::get_publications("t1ZHrCoAAAAJ") %>%
 #   tibble::as_tibble() # Update with ready4show ref once migration complete
 # Note : need to write script that compacts keywords and place call here
+# Implementing a combined individual placement and support and vocational peer work program in integrated youth mental health setting
+# Social inclusion, intersectionality, and profiles of vulnerable groups of young people seeking mental health support
+# Study protocol for the Multimodal Approach to Preventing Suicide in Schools (MAPSS) project: a regionally based randomised trial of an integrated response to suicide risk among # MOVE From PREPRINT
+# Providing a pathway to community‐based psychosocial or mental health support services for young people following initial encounters with police: a scoping review
+# Inequalities in Access to Mental Health Treatment by Australian Youths During the COVID‐19 Pandemic
+# Mental health systems modelling for evidence‐informed service reform in Australia #PP
+# Heterogeneity of quality of life in young people attending primary mental health services
+
 pubs_df <- make_pubs_df(path_to_bib_1L_chr = "PREP/nihr.bib",#"PREP/My_PR_PUBS.bib"
                         given_nm_1L_chr = "Matthew",
                         middle_nms_chr = "Phillip",

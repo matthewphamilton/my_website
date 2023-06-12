@@ -24,9 +24,9 @@ interests:
 - Simulation
 name: Matthew Hamilton
 organizations:
-- name: Orygen
-  url: ""
-role: Senior Policy Analyst and Lead - Health Economics Workstream
+- name: Monash University
+  url: "https://research.monash.edu/en/organisations/sphpm-health-economics-group"
+role: PhD Candidate
 social:
 - icon: envelope
   icon_pack: fas
@@ -43,7 +43,7 @@ user_groups:
 - Visitors
 ---
 
-I am a research economist at [Orygen](https://www.orygen.org.au/), where I work to improve mental health outcomes for young people. My main focus is to identify better approaches to financing and organising the systems that support the mental health of young people by exploring those systems using a novel modelling framework. 
+As an economic researcher, my main focus is to help improve the [transparency, reusability and updatability](https://www.ready4-dev.com) of computational models used to inform health policy and system design. 
 
-I believe that for models to be trustworthy they should be as transparent as possible and that modelling mental health systems is a complex task that is best approached iteratively and collaboratively. For these reasons, the models I work on adopt open source approaches.
+I believe that complex modelling projects are best approached iteratively and collaboratively. For these reasons, the models I work on adopt open source approaches.
 
